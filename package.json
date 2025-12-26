@@ -1,6 +1,6 @@
 {
   "name": "zangief",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "llmist gadgets for exploring GitHub repos via Sourcegraph API",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target node --external:tiktoken",
+    "build": "bun build src/index.ts --outdir dist --target node --packages=external",
     "dev": "bun run src/index.ts",
     "demo": "bun run examples/demo.ts",
     "typecheck": "tsc --noEmit"
