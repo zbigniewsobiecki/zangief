@@ -15,14 +15,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target node --packages=external",
-    "dev": "bun run src/index.ts",
-    "demo": "bun run examples/demo.ts",
+    "build": "tsup src/index.ts --format esm --dts --target node18",
+    "dev": "tsx src/index.ts",
+    "demo": "tsx examples/demo.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/bun": "^1.0.0",
-    "llmist": ">=8.0.0",
+    "@types/node": "^22.0.0",
+    "llmist": "^11.0.1",
+    "tsup": "^8.0.0",
+    "tsx": "^4.0.0",
     "typescript": "^5.4.0",
     "zod": "^3.23.0"
   },
