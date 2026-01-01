@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.1...v1.0.2) (2026-01-01)
+
+### Bug Fixes
+
+* **ci:** add explicit branch check to release workflow ([15b1190](https://github.com/zbigniewsobiecki/zangief/commit/15b1190cc65a239a2c42b866aabd782ae15d4f02))
+
 ## [1.0.1](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.0...v1.0.1) (2026-01-01)
 
 ### Bug Fixes
