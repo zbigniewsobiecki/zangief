@@ -1,42 +1,51 @@
 {
-  "name": "zangief",
-  "version": "1.0.4",
-  "type": "module",
-  "description": "llmist gadgets for exploring GitHub repos via Sourcegraph API",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --target node18",
-    "dev": "tsx src/index.ts",
-    "demo": "tsx examples/demo.ts",
-    "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^12.0.2",
-    "@types/node": "^22.0.0",
-    "conventional-changelog-conventionalcommits": "^9.1.0",
-    "llmist": "^11.0.1",
-    "semantic-release": "^25.0.2",
-    "tsup": "^8.0.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.4.0",
-    "zod": "^3.23.0"
-  },
-  "peerDependencies": {
-    "llmist": ">=8.0.0"
-  },
-  "engines": {
-    "node": ">=22.0.0"
-  }
+	"name": "zangief",
+	"version": "1.0.4",
+	"type": "module",
+	"description": "llmist gadgets for exploring GitHub repos via Sourcegraph API",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts --format esm --dts --target node18",
+		"dev": "tsx src/index.ts",
+		"demo": "tsx examples/demo.ts",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write .",
+		"check": "biome check --write .",
+		"prepare": "lefthook install || true"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.0.0",
+		"@commitlint/cli": "^19.0.0",
+		"@commitlint/config-conventional": "^19.0.0",
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^12.0.2",
+		"@types/node": "^22.0.0",
+		"conventional-changelog-conventionalcommits": "^9.1.0",
+		"lefthook": "^1.11.0",
+		"llmist": "^11.0.1",
+		"semantic-release": "^25.0.2",
+		"tsup": "^8.0.0",
+		"tsx": "^4.0.0",
+		"typescript": "^5.4.0",
+		"zod": "^3.23.0"
+	},
+	"peerDependencies": {
+		"llmist": ">=8.0.0"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	}
 }

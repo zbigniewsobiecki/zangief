@@ -30,30 +30,25 @@
 
 // Agent factory
 export { createSourcegraphExplorer } from "./agent.js";
-
-// System prompt
-export { SOURCEGRAPH_SYSTEM_PROMPT } from "./system-prompt.js";
-
+// Client utilities
+export { SourcegraphClientError, sourcegraphQuery } from "./client.js";
 // All gadgets as array
-export { sourcegraphGadgets } from "./gadgets/index.js";
-
 // Individual gadgets
 export {
-  sourcegraphSearch,
-  sourcegraphGetFile,
-  sourcegraphListRepos,
-  sourcegraphCommitSearch,
+	sourcegraphCommitSearch,
+	sourcegraphGadgets,
+	sourcegraphGetFile,
+	sourcegraphListRepos,
+	sourcegraphSearch,
 } from "./gadgets/index.js";
-
+// System prompt
+export { SOURCEGRAPH_SYSTEM_PROMPT } from "./system-prompt.js";
 // Types for advanced usage
 export type {
-  SearchResult,
-  FileMatch,
-  CommitMatch,
-  RepoMatch,
-  FileContentResult,
-  RepositoryListResult,
+	CommitMatch,
+	FileContentResult,
+	FileMatch,
+	RepoMatch,
+	RepositoryListResult,
+	SearchResult,
 } from "./types.js";
-
-// Client utilities
-export { sourcegraphQuery, SourcegraphClientError } from "./client.js";

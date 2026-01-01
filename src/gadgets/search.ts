@@ -5,8 +5,8 @@
 import { createGadget, z } from "llmist";
 import { sourcegraphQuery } from "../client.js";
 import type { SearchResult } from "../types.js";
-import { isFileMatch, isCommitMatch, isRepoMatch } from "../types.js";
-import { formatFileMatch, formatCommitMatch, formatRepoMatch } from "../utils/format.js";
+import { isCommitMatch, isFileMatch, isRepoMatch } from "../types.js";
+import { formatCommitMatch, formatFileMatch, formatRepoMatch } from "../utils/format.js";
 
 const SEARCH_QUERY = `
 query Search($query: String!) {
@@ -68,8 +68,8 @@ query Search($query: String!) {
 `;
 
 export const sourcegraphSearch = createGadget({
-  name: "SourcegraphSearch",
-  description: `Search code across public GitHub repositories using Sourcegraph.
+	name: "SourcegraphSearch",
+	description: `Search code across public GitHub repositories using Sourcegraph.
 
 **Query Syntax:**
 - \`repo:github.com/org/repo\` - Search in specific repo
@@ -86,91 +86,89 @@ export const sourcegraphSearch = createGadget({
 - \`createGadget lang:typescript\` - Find TypeScript code
 - \`repo:github.com/facebook/react useState\` - Search in React repo
 - \`file:package.json "react"\` - Find package.json files mentioning react`,
-  timeoutMs: 15000,
-  schema: z.object({
-    query: z
-      .string()
-      .min(1)
-      .describe(
-        "Sourcegraph search query. Use filters like repo:, lang:, file: for precision.",
-      ),
-    maxResults: z
-      .number()
-      .int()
-      .min(1)
-      .max(100)
-      .optional()
-      .default(25)
-      .describe("Maximum number of results to return (1-100, default 25)"),
-  }),
-  examples: [
-    {
-      params: { query: "createGadget lang:typescript", maxResults: 10 },
-      comment: "Search for TypeScript code containing 'createGadget'",
-    },
-    {
-      params: { query: "repo:github.com/facebook/react useState file:*.ts", maxResults: 25 },
-      comment: "Search React repo for useState in TypeScript files",
-    },
-    {
-      params: { query: "type:commit fix bug", maxResults: 20 },
-      comment: "Search commit messages for bug fixes",
-    },
-  ],
-  execute: async ({ query, maxResults }) => {
-    // Add count filter if not already present
-    let fullQuery = query;
-    if (!query.includes("count:")) {
-      fullQuery = `${query} count:${maxResults}`;
-    }
+	timeoutMs: 15000,
+	schema: z.object({
+		query: z
+			.string()
+			.min(1)
+			.describe("Sourcegraph search query. Use filters like repo:, lang:, file: for precision."),
+		maxResults: z
+			.number()
+			.int()
+			.min(1)
+			.max(100)
+			.optional()
+			.default(25)
+			.describe("Maximum number of results to return (1-100, default 25)"),
+	}),
+	examples: [
+		{
+			params: { query: "createGadget lang:typescript", maxResults: 10 },
+			comment: "Search for TypeScript code containing 'createGadget'",
+		},
+		{
+			params: { query: "repo:github.com/facebook/react useState file:*.ts", maxResults: 25 },
+			comment: "Search React repo for useState in TypeScript files",
+		},
+		{
+			params: { query: "type:commit fix bug", maxResults: 20 },
+			comment: "Search commit messages for bug fixes",
+		},
+	],
+	execute: async ({ query, maxResults }) => {
+		// Add count filter if not already present
+		let fullQuery = query;
+		if (!query.includes("count:")) {
+			fullQuery = `${query} count:${maxResults}`;
+		}
 
-    const data = await sourcegraphQuery<SearchResult>(SEARCH_QUERY, { query: fullQuery });
+		const data = await sourcegraphQuery<SearchResult>(SEARCH_QUERY, { query: fullQuery });
 
-    const results = data.search.results;
+		const results = data.search.results;
 
-    if (results.results.length === 0) {
-      let message = `No results found for: "${query}"`;
-      if (results.cloning.length > 0) {
-        message += `\n\nNote: ${results.cloning.length} repositories are still being cloned.`;
-      }
-      if (results.timedout.length > 0) {
-        message += `\n\nNote: ${results.timedout.length} repositories timed out.`;
-      }
-      return message;
-    }
+		if (results.results.length === 0) {
+			let message = `No results found for: "${query}"`;
+			if (results.cloning.length > 0) {
+				message += `\n\nNote: ${results.cloning.length} repositories are still being cloned.`;
+			}
+			if (results.timedout.length > 0) {
+				message += `\n\nNote: ${results.timedout.length} repositories timed out.`;
+			}
+			return message;
+		}
 
-    const lines: string[] = [];
+		const lines: string[] = [];
 
-    // Header
-    const limitNote = results.limitHit ? " (limit reached)" : "";
-    lines.push(`Search results for "${query}" (${results.matchCount} matches${limitNote})`);
-    lines.push("");
+		// Header
+		const limitNote = results.limitHit ? " (limit reached)" : "";
+		lines.push(`Search results for "${query}" (${results.matchCount} matches${limitNote})`);
+		lines.push("");
 
-    // Format each result
-    let index = 1;
-    for (const result of results.results) {
-      if (isFileMatch(result)) {
-        lines.push(formatFileMatch(result, index));
-      } else if (isCommitMatch(result)) {
-        lines.push(formatCommitMatch(result, index));
-      } else if (isRepoMatch(result)) {
-        lines.push(formatRepoMatch(result, index));
-      }
-      lines.push("");
-      index++;
-    }
+		// Format each result
+		let index = 1;
+		for (const result of results.results) {
+			if (isFileMatch(result)) {
+				lines.push(formatFileMatch(result, index));
+			} else if (isCommitMatch(result)) {
+				lines.push(formatCommitMatch(result, index));
+			} else if (isRepoMatch(result)) {
+				lines.push(formatRepoMatch(result, index));
+			}
+			lines.push("");
+			index++;
+		}
 
-    // Warnings
-    if (results.cloning.length > 0) {
-      lines.push(`Note: ${results.cloning.length} repositories are still being cloned.`);
-    }
-    if (results.timedout.length > 0) {
-      lines.push(`Note: ${results.timedout.length} repositories timed out.`);
-    }
-    if (results.missing.length > 0) {
-      lines.push(`Note: ${results.missing.length} repositories are missing.`);
-    }
+		// Warnings
+		if (results.cloning.length > 0) {
+			lines.push(`Note: ${results.cloning.length} repositories are still being cloned.`);
+		}
+		if (results.timedout.length > 0) {
+			lines.push(`Note: ${results.timedout.length} repositories timed out.`);
+		}
+		if (results.missing.length > 0) {
+			lines.push(`Note: ${results.missing.length} repositories are missing.`);
+		}
 
-    return lines.join("\n");
-  },
+		return lines.join("\n");
+	},
 });

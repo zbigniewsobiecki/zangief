@@ -2,7 +2,7 @@
  * SourcegraphExplorer agent factory.
  */
 
-import type { LLMist, AgentBuilder } from "llmist";
+import type { AgentBuilder, LLMist } from "llmist";
 import { sourcegraphGadgets } from "./gadgets/index.js";
 import { SOURCEGRAPH_SYSTEM_PROMPT } from "./system-prompt.js";
 
@@ -43,9 +43,9 @@ export type { LLMist, AgentBuilder };
  * ```
  */
 export function createSourcegraphExplorer(client: LLMist): AgentBuilder {
-  return client
-    .createAgent()
-    .withSystem(SOURCEGRAPH_SYSTEM_PROMPT)
-    .withGadgets(...sourcegraphGadgets)
-    .withMaxIterations(15);
+	return client
+		.createAgent()
+		.withSystem(SOURCEGRAPH_SYSTEM_PROMPT)
+		.withGadgets(...sourcegraphGadgets)
+		.withMaxIterations(15);
 }
