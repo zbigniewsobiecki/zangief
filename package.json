@@ -1,6 +1,6 @@
 {
 	"name": "zangief",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"type": "module",
 	"description": "llmist gadgets for exploring GitHub repos via Sourcegraph API",
 	"main": "dist/index.js",
