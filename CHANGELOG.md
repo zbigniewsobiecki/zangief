@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.0...v1.0.1) (2026-01-01)
+
+### Bug Fixes
+
+* **ci:** explicitly checkout main branch in release workflow ([4feb500](https://github.com/zbigniewsobiecki/zangief/commit/4feb5003dffea0f3c2dd4d3d8970d26257917a89))
+
 ## 1.0.0 (2026-01-01)
 
 ### Features
