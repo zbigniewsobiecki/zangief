@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.2...v1.0.3) (2026-01-01)
+
+### Bug Fixes
+
+* **ci:** use --branch main to override semantic-release branch detection ([3fcd83d](https://github.com/zbigniewsobiecki/zangief/commit/3fcd83d7671292afa15ac8c33817a83c26aeafe9))
+
 ## [1.0.2](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.1...v1.0.2) (2026-01-01)
 
 ### Bug Fixes
