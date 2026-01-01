@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.3...v1.0.4) (2026-01-01)
+
+### Bug Fixes
+
+* **ci:** override GITHUB_REF env var for semantic-release ([bfc56c5](https://github.com/zbigniewsobiecki/zangief/commit/bfc56c53af692fa21c7b363fff7868b966e2b18c))
+
 ## [1.0.3](https://github.com/zbigniewsobiecki/zangief/compare/v1.0.2...v1.0.3) (2026-01-01)
 
 ### Bug Fixes
